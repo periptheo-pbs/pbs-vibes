@@ -1,0 +1,33 @@
+2026-04-29 10:57:14,651 INFO Starting HL Data Daemon — TESTNET
+2026-04-29 10:57:14,651 INFO Coins: ['BTC', 'ETH', 'SOL']
+2026-04-29 10:57:14,651 INFO Data dir: /home/bakoe/pbs-vibes/data
+2026-04-29 10:57:14,670 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 10:57:15,040 INFO Connected. Subscribing to feeds...
+2026-04-29 10:57:15,041 INFO   Subscribed: BTC trades + ctx
+2026-04-29 10:57:15,041 INFO   Subscribed: ETH trades + ctx
+2026-04-29 10:57:15,041 INFO   Subscribed: SOL trades + ctx
+2026-04-29 10:57:15,191 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'trades', 'coin': 'BTC'}}
+2026-04-29 10:57:15,208 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'activeAssetCtx', 'coin': 'BTC'}}
+2026-04-29 10:57:15,235 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'trades', 'coin': 'ETH'}}
+2026-04-29 10:57:15,295 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'activeAssetCtx', 'coin': 'ETH'}}
+2026-04-29 10:57:15,295 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'trades', 'coin': 'SOL'}}
+2026-04-29 10:57:15,296 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'activeAssetCtx', 'coin': 'SOL'}}
+2026-04-29 10:57:34,013 INFO Starting HL Data Daemon — TESTNET
+2026-04-29 10:57:34,014 INFO Coins: ['BTC', 'ETH', 'SOL']
+2026-04-29 10:57:34,014 INFO Data dir: /home/bakoe/pbs-vibes/data
+2026-04-29 10:57:34,032 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 10:57:34,387 INFO Connected. Subscribing to feeds...
+2026-04-29 10:57:34,388 INFO   Subscribed: BTC trades + ctx
+2026-04-29 10:57:34,388 INFO   Subscribed: ETH trades + ctx
+2026-04-29 10:57:34,388 INFO   Subscribed: SOL trades + ctx
+2026-04-29 10:57:34,534 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'trades', 'coin': 'BTC'}}
+2026-04-29 10:57:34,557 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'activeAssetCtx', 'coin': 'BTC'}}
+2026-04-29 10:57:34,569 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'trades', 'coin': 'ETH'}}
+2026-04-29 10:57:34,642 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'activeAssetCtx', 'coin': 'ETH'}}
+2026-04-29 10:57:34,642 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'trades', 'coin': 'SOL'}}
+2026-04-29 10:57:34,644 INFO Subscription confirmed: {'method': 'subscribe', 'subscription': {'type': 'activeAssetCtx', 'coin': 'SOL'}}
+2026-04-29 10:58:02,281 INFO Flush: 91 trades buffered, 4 msgs total
+2026-04-29 10:58:30,500 INFO Flush: 95 trades buffered, 8 msgs total
+2026-04-29 10:58:58,706 INFO Flush: 109 trades buffered, 15 msgs total
+2026-04-29 10:59:26,926 INFO Flush: 126 trades buffered, 25 msgs total
+2026-04-29 10:59:55,136 INFO Flush: 133 trades buffered, 30 msgs total

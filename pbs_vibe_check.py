@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import json
 import math
 import os
 import sys
@@ -289,11 +290,35 @@ def hl_candles(coin: str, interval: str, count: int) -> List[dict]:
 
 
 def hl_recent_trades(coin: str, limit: int = 500) -> List["TradeTick"]:
-    """Fetch recent executed trades for a coin."""
+    """Fetch recent trades from daemon buffer (preferred) or REST fallback."""
+    trades: List[TradeTick] = []
+
+    # Try daemon buffer first
+    buffer_path = PROJECT_ROOT / "data" / "trades_buffer.json"
+    if buffer_path.exists():
+        try:
+            buf = json.loads(buffer_path.read_text())
+            coin_trades = buf.get("trades", {}).get(coin, [])
+            for t in coin_trades[-limit:]:
+                px = t.get("px", 0)
+                sz = t.get("sz", 0)
+                if px > 0 and sz > 0:
+                    trades.append(TradeTick(
+                        side=t.get("side", "buy"),
+                        price=px,
+                        size=sz,
+                        timestamp_s=t.get("t", 0) / 1000.0,
+                        is_liquidation=t.get("liq", False),
+                    ))
+            if trades:
+                return trades
+        except Exception:
+            pass
+
+    # Fallback: REST
     data = _hl_post({"type": "recentTrades", "coin": coin})
     if not isinstance(data, list):
         return []
-    trades: List[TradeTick] = []
     for t in data[-limit:]:
         try:
             side_raw = t.get("side", "B")
