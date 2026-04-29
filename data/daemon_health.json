@@ -1,1 +1,1 @@
-{"updated": "2026-04-29T18:05:07.398616+00:00", "running": true, "network": "testnet", "coins": ["BTC", "ETH", "SOL"], "msg_count": 107, "reconnect_count": 0, "last_msg_age_s": 0.3, "trades_per_coin": {"BTC": 156, "ETH": 53, "SOL": 40}}
+{"updated": "2026-04-29T18:15:23.320518+00:00", "running": true, "network": "testnet", "coins": ["BTC", "ETH", "SOL"], "msg_count": 18, "reconnect_count": 0, "last_msg_age_s": 0.0, "trades_per_coin": {"BTC": 42, "ETH": 40, "SOL": 32}, "db_trades": 102, "db_ctx": 140}
