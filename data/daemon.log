@@ -235,3 +235,323 @@
 2026-04-29 11:21:28,913 INFO Flush: 226 buffered, 226 in DB, 88 msgs total
 2026-04-29 11:21:58,954 INFO Flush: 229 buffered, 229 in DB, 91 msgs total
 2026-04-29 11:22:27,011 INFO Flush: 236 buffered, 236 in DB, 98 msgs total
+2026-04-29 11:22:55,122 INFO Flush: 241 buffered, 241 in DB, 102 msgs total
+2026-04-29 11:23:23,211 INFO Flush: 246 buffered, 246 in DB, 106 msgs total
+2026-04-29 11:23:51,334 INFO Flush: 248 buffered, 248 in DB, 107 msgs total
+2026-04-29 11:24:19,461 INFO Flush: 251 buffered, 251 in DB, 109 msgs total
+2026-04-29 11:24:47,477 INFO Flush: 262 buffered, 262 in DB, 113 msgs total
+2026-04-29 11:25:15,615 INFO Flush: 263 buffered, 263 in DB, 114 msgs total
+2026-04-29 11:25:43,640 INFO Flush: 267 buffered, 267 in DB, 118 msgs total
+2026-04-29 11:25:55,913 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 11:25:56,247 INFO Connected. Subscribing...
+2026-04-29 11:25:56,248 INFO   Subscribed: BTC
+2026-04-29 11:25:56,248 INFO   Subscribed: ETH
+2026-04-29 11:25:56,248 INFO   Subscribed: SOL
+2026-04-29 11:25:56,398 INFO Sub confirmed: trades
+2026-04-29 11:25:56,412 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:25:56,435 INFO Sub confirmed: trades
+2026-04-29 11:25:56,504 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:25:56,505 INFO Sub confirmed: trades
+2026-04-29 11:25:56,509 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:26:11,795 INFO Flush: 362 buffered, 362 in DB, 124 msgs total
+2026-04-29 11:26:39,892 INFO Flush: 364 buffered, 364 in DB, 125 msgs total
+2026-04-29 11:26:52,660 ERROR Disconnected (no close frame received or sent). Reconnecting in 5s...
+2026-04-29 11:26:57,756 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 11:26:58,652 INFO Connected. Subscribing...
+2026-04-29 11:26:58,652 INFO   Subscribed: BTC
+2026-04-29 11:26:58,653 INFO   Subscribed: ETH
+2026-04-29 11:26:58,653 INFO   Subscribed: SOL
+2026-04-29 11:26:58,814 INFO Sub confirmed: trades
+2026-04-29 11:26:58,900 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:26:58,912 INFO Sub confirmed: trades
+2026-04-29 11:26:58,949 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:26:58,950 INFO Sub confirmed: trades
+2026-04-29 11:26:58,978 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:27:07,951 INFO Flush: 456 buffered, 456 in DB, 130 msgs total
+2026-04-29 11:27:36,084 INFO Flush: 457 buffered, 457 in DB, 131 msgs total
+2026-04-29 11:28:04,073 INFO Flush: 461 buffered, 461 in DB, 135 msgs total
+2026-04-29 11:28:34,102 INFO Flush: 462 buffered, 462 in DB, 136 msgs total
+2026-04-29 11:29:02,207 INFO Flush: 496 buffered, 496 in DB, 146 msgs total
+2026-04-29 11:29:30,345 INFO Flush: 498 buffered, 498 in DB, 148 msgs total
+2026-04-29 11:29:47,041 ERROR Disconnected (no close frame received or sent). Reconnecting in 5s...
+2026-04-29 11:29:52,120 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 11:29:52,490 INFO Connected. Subscribing...
+2026-04-29 11:29:52,490 INFO   Subscribed: BTC
+2026-04-29 11:29:52,490 INFO   Subscribed: ETH
+2026-04-29 11:29:52,491 INFO   Subscribed: SOL
+2026-04-29 11:29:52,638 INFO Sub confirmed: trades
+2026-04-29 11:29:52,666 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:29:52,677 INFO Sub confirmed: trades
+2026-04-29 11:29:52,756 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:29:52,756 INFO Sub confirmed: trades
+2026-04-29 11:29:52,762 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:29:58,368 INFO Flush: 590 buffered, 590 in DB, 152 msgs total
+2026-04-29 11:30:26,458 INFO Flush: 607 buffered, 607 in DB, 163 msgs total
+2026-04-29 11:30:54,575 INFO Flush: 618 buffered, 618 in DB, 169 msgs total
+2026-04-29 11:31:22,630 INFO Flush: 646 buffered, 646 in DB, 181 msgs total
+2026-04-29 11:31:50,749 INFO Flush: 668 buffered, 668 in DB, 195 msgs total
+2026-04-29 11:32:18,782 INFO Flush: 672 buffered, 672 in DB, 199 msgs total
+2026-04-29 11:32:46,917 INFO Flush: 685 buffered, 685 in DB, 203 msgs total
+2026-04-29 11:33:15,017 INFO Flush: 690 buffered, 690 in DB, 207 msgs total
+2026-04-29 11:33:43,077 INFO Flush: 693 buffered, 693 in DB, 209 msgs total
+2026-04-29 11:34:11,189 INFO Flush: 706 buffered, 706 in DB, 219 msgs total
+2026-04-29 11:34:39,252 INFO Flush: 710 buffered, 710 in DB, 222 msgs total
+2026-04-29 11:35:09,313 INFO Flush: 720 buffered, 720 in DB, 229 msgs total
+2026-04-29 11:35:37,426 INFO Flush: 733 buffered, 733 in DB, 235 msgs total
+2026-04-29 11:36:05,463 INFO Flush: 736 buffered, 736 in DB, 238 msgs total
+2026-04-29 11:36:33,568 INFO Flush: 737 buffered, 737 in DB, 239 msgs total
+2026-04-29 11:37:01,685 INFO Flush: 752 buffered, 752 in DB, 244 msgs total
+2026-04-29 11:37:29,737 INFO Flush: 756 buffered, 756 in DB, 248 msgs total
+2026-04-29 11:37:57,809 INFO Flush: 763 buffered, 763 in DB, 253 msgs total
+2026-04-29 11:38:25,862 INFO Flush: 772 buffered, 772 in DB, 261 msgs total
+2026-04-29 11:38:53,929 INFO Flush: 776 buffered, 776 in DB, 264 msgs total
+2026-04-29 11:39:22,010 INFO Flush: 787 buffered, 787 in DB, 270 msgs total
+2026-04-29 11:39:50,072 INFO Flush: 792 buffered, 792 in DB, 275 msgs total
+2026-04-29 11:40:18,130 INFO Flush: 802 buffered, 802 in DB, 281 msgs total
+2026-04-29 11:40:46,135 INFO Flush: 825 buffered, 825 in DB, 294 msgs total
+2026-04-29 11:41:12,946 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 11:41:13,314 INFO Connected. Subscribing...
+2026-04-29 11:41:13,314 INFO   Subscribed: BTC
+2026-04-29 11:41:13,315 INFO   Subscribed: ETH
+2026-04-29 11:41:13,315 INFO   Subscribed: SOL
+2026-04-29 11:41:13,462 INFO Sub confirmed: trades
+2026-04-29 11:41:13,482 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:41:13,502 INFO Sub confirmed: trades
+2026-04-29 11:41:13,574 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:41:13,575 INFO Sub confirmed: trades
+2026-04-29 11:41:13,580 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:41:14,182 INFO Flush: 927 buffered, 927 in DB, 306 msgs total
+2026-04-29 11:41:44,200 INFO Flush: 927 buffered, 927 in DB, 306 msgs total
+2026-04-29 11:42:12,257 INFO Flush: 930 buffered, 930 in DB, 309 msgs total
+2026-04-29 11:42:40,319 INFO Flush: 935 buffered, 935 in DB, 314 msgs total
+2026-04-29 11:43:08,360 INFO Flush: 937 buffered, 937 in DB, 316 msgs total
+2026-04-29 11:43:36,348 INFO Flush: 939 buffered, 939 in DB, 318 msgs total
+2026-04-29 11:44:04,440 INFO Flush: 942 buffered, 942 in DB, 321 msgs total
+2026-04-29 11:44:32,504 INFO Flush: 944 buffered, 944 in DB, 323 msgs total
+2026-04-29 11:45:00,525 INFO Flush: 945 buffered, 945 in DB, 324 msgs total
+2026-04-29 11:45:28,602 INFO Flush: 955 buffered, 955 in DB, 332 msgs total
+2026-04-29 11:45:53,652 ERROR Disconnected (no close frame received or sent). Reconnecting in 5s...
+2026-04-29 11:45:56,591 INFO Flush: 955 buffered, 955 in DB, 332 msgs total
+2026-04-29 11:45:58,768 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 11:45:59,670 INFO Connected. Subscribing...
+2026-04-29 11:45:59,670 INFO   Subscribed: BTC
+2026-04-29 11:45:59,671 INFO   Subscribed: ETH
+2026-04-29 11:45:59,671 INFO   Subscribed: SOL
+2026-04-29 11:45:59,854 INFO Sub confirmed: trades
+2026-04-29 11:45:59,896 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:45:59,896 INFO Sub confirmed: trades
+2026-04-29 11:45:59,932 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:45:59,940 INFO Sub confirmed: trades
+2026-04-29 11:46:00,012 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:46:24,680 INFO Flush: 1059 buffered, 1059 in DB, 345 msgs total
+2026-04-29 11:46:52,744 INFO Flush: 1108 buffered, 1108 in DB, 371 msgs total
+2026-04-29 11:47:20,748 INFO Flush: 1144 buffered, 1144 in DB, 393 msgs total
+2026-04-29 11:47:48,784 INFO Flush: 1163 buffered, 1163 in DB, 399 msgs total
+2026-04-29 11:48:18,828 INFO Flush: 1167 buffered, 1167 in DB, 401 msgs total
+2026-04-29 11:48:46,794 INFO Flush: 1176 buffered, 1176 in DB, 408 msgs total
+2026-04-29 11:49:14,895 INFO Flush: 1217 buffered, 1217 in DB, 429 msgs total
+2026-04-29 11:49:42,936 INFO Flush: 1259 buffered, 1259 in DB, 454 msgs total
+2026-04-29 11:50:10,912 INFO Flush: 1271 buffered, 1271 in DB, 462 msgs total
+2026-04-29 11:50:38,977 INFO Flush: 1272 buffered, 1272 in DB, 463 msgs total
+2026-04-29 11:51:06,945 INFO Flush: 1292 buffered, 1292 in DB, 472 msgs total
+2026-04-29 11:51:34,953 INFO Flush: 1297 buffered, 1297 in DB, 476 msgs total
+2026-04-29 11:52:03,104 INFO Flush: 1298 buffered, 1298 in DB, 477 msgs total
+2026-04-29 11:52:31,088 INFO Flush: 1302 buffered, 1302 in DB, 481 msgs total
+2026-04-29 11:52:59,109 INFO Flush: 1303 buffered, 1303 in DB, 482 msgs total
+2026-04-29 11:53:27,163 INFO Flush: 1308 buffered, 1308 in DB, 487 msgs total
+2026-04-29 11:53:55,223 INFO Flush: 1311 buffered, 1311 in DB, 490 msgs total
+2026-04-29 11:54:25,256 INFO Flush: 1317 buffered, 1317 in DB, 495 msgs total
+2026-04-29 11:54:53,368 INFO Flush: 1318 buffered, 1318 in DB, 496 msgs total
+2026-04-29 11:55:21,379 INFO Flush: 1320 buffered, 1320 in DB, 498 msgs total
+2026-04-29 11:55:49,432 INFO Flush: 1347 buffered, 1347 in DB, 507 msgs total
+2026-04-29 11:56:17,425 INFO Flush: 1359 buffered, 1359 in DB, 516 msgs total
+2026-04-29 11:56:45,493 INFO Flush: 1373 buffered, 1373 in DB, 519 msgs total
+2026-04-29 11:57:13,544 INFO Flush: 1374 buffered, 1374 in DB, 520 msgs total
+2026-04-29 11:57:24,523 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 11:57:25,435 INFO Connected. Subscribing...
+2026-04-29 11:57:25,435 INFO   Subscribed: BTC
+2026-04-29 11:57:25,436 INFO   Subscribed: ETH
+2026-04-29 11:57:25,436 INFO   Subscribed: SOL
+2026-04-29 11:57:25,743 INFO Sub confirmed: trades
+2026-04-29 11:57:25,781 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:57:25,781 INFO Sub confirmed: trades
+2026-04-29 11:57:25,786 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:57:25,787 INFO Sub confirmed: trades
+2026-04-29 11:57:25,878 INFO Sub confirmed: activeAssetCtx
+2026-04-29 11:57:41,542 INFO Flush: 1475 buffered, 1475 in DB, 531 msgs total
+2026-04-29 11:58:09,601 INFO Flush: 1475 buffered, 1475 in DB, 531 msgs total
+2026-04-29 11:58:37,579 INFO Flush: 1477 buffered, 1477 in DB, 533 msgs total
+2026-04-29 11:59:05,634 INFO Flush: 1477 buffered, 1477 in DB, 533 msgs total
+2026-04-29 11:59:33,653 INFO Flush: 1481 buffered, 1481 in DB, 536 msgs total
+2026-04-29 12:00:01,630 INFO Flush: 1485 buffered, 1485 in DB, 540 msgs total
+2026-04-29 12:00:29,670 INFO Flush: 1495 buffered, 1495 in DB, 548 msgs total
+2026-04-29 12:00:59,722 INFO Flush: 1502 buffered, 1502 in DB, 554 msgs total
+2026-04-29 12:01:27,699 INFO Flush: 1510 buffered, 1510 in DB, 560 msgs total
+2026-04-29 12:01:55,702 INFO Flush: 1512 buffered, 1512 in DB, 562 msgs total
+2026-04-29 12:02:23,708 INFO Flush: 1516 buffered, 1516 in DB, 565 msgs total
+2026-04-29 12:02:51,673 INFO Flush: 1517 buffered, 1517 in DB, 566 msgs total
+2026-04-29 12:03:19,693 INFO Flush: 1517 buffered, 1517 in DB, 566 msgs total
+2026-04-29 12:03:47,715 INFO Flush: 1520 buffered, 1520 in DB, 569 msgs total
+2026-04-29 12:04:15,706 INFO Flush: 1524 buffered, 1524 in DB, 573 msgs total
+2026-04-29 12:04:43,770 INFO Flush: 1525 buffered, 1525 in DB, 574 msgs total
+2026-04-29 12:05:11,723 INFO Flush: 1532 buffered, 1532 in DB, 581 msgs total
+2026-04-29 12:05:39,779 INFO Flush: 1544 buffered, 1544 in DB, 592 msgs total
+2026-04-29 12:06:07,765 INFO Flush: 1547 buffered, 1547 in DB, 594 msgs total
+2026-04-29 12:06:35,768 INFO Flush: 1549 buffered, 1549 in DB, 596 msgs total
+2026-04-29 12:07:05,830 INFO Flush: 1550 buffered, 1550 in DB, 597 msgs total
+2026-04-29 12:07:33,828 INFO Flush: 1552 buffered, 1552 in DB, 599 msgs total
+2026-04-29 12:08:01,784 INFO Flush: 1555 buffered, 1555 in DB, 602 msgs total
+2026-04-29 12:08:21,477 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 12:08:22,371 INFO Connected. Subscribing...
+2026-04-29 12:08:22,371 INFO   Subscribed: BTC
+2026-04-29 12:08:22,372 INFO   Subscribed: ETH
+2026-04-29 12:08:22,372 INFO   Subscribed: SOL
+2026-04-29 12:08:22,533 INFO Sub confirmed: trades
+2026-04-29 12:08:22,575 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:08:22,576 INFO Sub confirmed: trades
+2026-04-29 12:08:22,613 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:08:22,667 INFO Sub confirmed: trades
+2026-04-29 12:08:22,687 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:08:29,843 INFO Flush: 1648 buffered, 1648 in DB, 607 msgs total
+2026-04-29 12:08:57,893 INFO Flush: 1669 buffered, 1669 in DB, 627 msgs total
+2026-04-29 12:09:25,895 INFO Flush: 1671 buffered, 1671 in DB, 628 msgs total
+2026-04-29 12:09:53,896 INFO Flush: 1673 buffered, 1673 in DB, 630 msgs total
+2026-04-29 12:10:21,830 INFO Flush: 1676 buffered, 1676 in DB, 633 msgs total
+2026-04-29 12:10:49,823 INFO Flush: 1678 buffered, 1678 in DB, 635 msgs total
+2026-04-29 12:11:17,875 INFO Flush: 1687 buffered, 1687 in DB, 644 msgs total
+2026-04-29 12:11:45,811 INFO Flush: 1688 buffered, 1688 in DB, 645 msgs total
+2026-04-29 12:12:13,840 INFO Flush: 1689 buffered, 1689 in DB, 646 msgs total
+2026-04-29 12:12:41,836 INFO Flush: 1693 buffered, 1693 in DB, 649 msgs total
+2026-04-29 12:13:11,881 INFO Flush: 1696 buffered, 1696 in DB, 652 msgs total
+2026-04-29 12:13:39,851 INFO Flush: 1696 buffered, 1696 in DB, 652 msgs total
+2026-04-29 12:14:07,863 INFO Flush: 1698 buffered, 1698 in DB, 654 msgs total
+2026-04-29 12:14:35,869 INFO Flush: 1698 buffered, 1698 in DB, 654 msgs total
+2026-04-29 12:15:03,837 INFO Flush: 1699 buffered, 1699 in DB, 655 msgs total
+2026-04-29 12:15:31,860 INFO Flush: 1710 buffered, 1710 in DB, 664 msgs total
+2026-04-29 12:15:59,892 INFO Flush: 1711 buffered, 1711 in DB, 665 msgs total
+2026-04-29 12:16:27,889 INFO Flush: 1721 buffered, 1721 in DB, 671 msgs total
+2026-04-29 12:16:55,885 INFO Flush: 1725 buffered, 1725 in DB, 674 msgs total
+2026-04-29 12:17:23,929 INFO Flush: 1726 buffered, 1726 in DB, 675 msgs total
+2026-04-29 12:17:51,941 INFO Flush: 1726 buffered, 1726 in DB, 675 msgs total
+2026-04-29 12:18:19,934 INFO Flush: 1726 buffered, 1726 in DB, 675 msgs total
+2026-04-29 12:18:22,078 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 12:18:22,975 INFO Connected. Subscribing...
+2026-04-29 12:18:22,976 INFO   Subscribed: BTC
+2026-04-29 12:18:22,976 INFO   Subscribed: ETH
+2026-04-29 12:18:22,976 INFO   Subscribed: SOL
+2026-04-29 12:18:23,133 INFO Sub confirmed: trades
+2026-04-29 12:18:23,174 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:18:23,175 INFO Sub confirmed: trades
+2026-04-29 12:18:23,200 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:18:23,212 INFO Sub confirmed: trades
+2026-04-29 12:18:23,277 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:18:47,981 INFO Flush: 1822 buffered, 1822 in DB, 683 msgs total
+2026-04-29 12:19:18,012 INFO Flush: 1823 buffered, 1823 in DB, 684 msgs total
+2026-04-29 12:19:46,027 INFO Flush: 1824 buffered, 1824 in DB, 685 msgs total
+2026-04-29 12:20:14,065 INFO Flush: 1827 buffered, 1827 in DB, 688 msgs total
+2026-04-29 12:20:42,031 INFO Flush: 1828 buffered, 1828 in DB, 689 msgs total
+2026-04-29 12:21:10,069 INFO Flush: 1830 buffered, 1830 in DB, 691 msgs total
+2026-04-29 12:21:37,995 INFO Flush: 1831 buffered, 1831 in DB, 692 msgs total
+2026-04-29 12:22:05,986 INFO Flush: 1836 buffered, 1836 in DB, 697 msgs total
+2026-04-29 12:22:33,953 INFO Flush: 1836 buffered, 1836 in DB, 697 msgs total
+2026-04-29 12:23:01,921 INFO Flush: 1836 buffered, 1836 in DB, 697 msgs total
+2026-04-29 12:23:29,959 INFO Flush: 1839 buffered, 1839 in DB, 700 msgs total
+2026-04-29 12:23:57,903 INFO Flush: 1840 buffered, 1840 in DB, 701 msgs total
+2026-04-29 12:24:25,919 INFO Flush: 1842 buffered, 1842 in DB, 702 msgs total
+2026-04-29 12:24:53,914 INFO Flush: 1844 buffered, 1844 in DB, 704 msgs total
+2026-04-29 12:25:21,899 INFO Flush: 1846 buffered, 1846 in DB, 706 msgs total
+2026-04-29 12:25:51,978 INFO Flush: 1849 buffered, 1849 in DB, 709 msgs total
+2026-04-29 12:26:19,964 INFO Flush: 1854 buffered, 1854 in DB, 714 msgs total
+2026-04-29 12:26:47,909 INFO Flush: 1854 buffered, 1854 in DB, 714 msgs total
+2026-04-29 12:27:15,929 INFO Flush: 1856 buffered, 1856 in DB, 716 msgs total
+2026-04-29 12:27:43,919 INFO Flush: 1866 buffered, 1866 in DB, 726 msgs total
+2026-04-29 12:28:11,891 INFO Flush: 1874 buffered, 1874 in DB, 731 msgs total
+2026-04-29 12:28:39,916 INFO Flush: 1874 buffered, 1874 in DB, 731 msgs total
+2026-04-29 12:29:07,827 INFO Flush: 1877 buffered, 1877 in DB, 733 msgs total
+2026-04-29 12:29:35,794 INFO Flush: 1880 buffered, 1880 in DB, 735 msgs total
+2026-04-29 12:29:51,016 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 12:29:52,008 INFO Connected. Subscribing...
+2026-04-29 12:29:52,009 INFO   Subscribed: BTC
+2026-04-29 12:29:52,009 INFO   Subscribed: ETH
+2026-04-29 12:29:52,009 INFO   Subscribed: SOL
+2026-04-29 12:29:52,253 INFO Sub confirmed: trades
+2026-04-29 12:29:52,343 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:29:52,348 INFO Sub confirmed: trades
+2026-04-29 12:29:52,364 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:29:52,365 INFO Sub confirmed: trades
+2026-04-29 12:29:52,404 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:30:03,818 INFO Flush: 1972 buffered, 1972 in DB, 740 msgs total
+2026-04-29 12:30:31,722 INFO Flush: 1976 buffered, 1976 in DB, 742 msgs total
+2026-04-29 12:30:59,711 INFO Flush: 1990 buffered, 1990 in DB, 756 msgs total
+2026-04-29 12:31:27,710 INFO Flush: 2017 buffered, 2017 in DB, 774 msgs total
+2026-04-29 12:31:57,749 INFO Flush: 2029 buffered, 2029 in DB, 783 msgs total
+2026-04-29 12:32:25,696 INFO Flush: 2037 buffered, 2037 in DB, 788 msgs total
+2026-04-29 12:32:53,712 INFO Flush: 2044 buffered, 2044 in DB, 789 msgs total
+2026-04-29 12:33:21,673 INFO Flush: 2047 buffered, 2047 in DB, 792 msgs total
+2026-04-29 12:33:49,619 INFO Flush: 2049 buffered, 2049 in DB, 793 msgs total
+2026-04-29 12:34:17,618 INFO Flush: 2051 buffered, 2051 in DB, 794 msgs total
+2026-04-29 12:34:45,596 INFO Flush: 2056 buffered, 2056 in DB, 799 msgs total
+2026-04-29 12:35:13,579 INFO Flush: 2058 buffered, 2058 in DB, 801 msgs total
+2026-04-29 12:35:41,491 INFO Flush: 2058 buffered, 2058 in DB, 801 msgs total
+2026-04-29 12:36:09,504 INFO Flush: 2060 buffered, 2060 in DB, 803 msgs total
+2026-04-29 12:36:37,518 INFO Flush: 2064 buffered, 2064 in DB, 807 msgs total
+2026-04-29 12:37:05,488 INFO Flush: 2068 buffered, 2068 in DB, 811 msgs total
+2026-04-29 12:37:33,498 INFO Flush: 2074 buffered, 2074 in DB, 816 msgs total
+2026-04-29 12:38:03,531 INFO Flush: 2075 buffered, 2075 in DB, 817 msgs total
+2026-04-29 12:38:31,511 INFO Flush: 2077 buffered, 2077 in DB, 819 msgs total
+2026-04-29 12:38:59,518 INFO Flush: 2079 buffered, 2079 in DB, 821 msgs total
+2026-04-29 12:39:27,493 INFO Flush: 2080 buffered, 2080 in DB, 822 msgs total
+2026-04-29 12:39:55,458 INFO Flush: 2081 buffered, 2081 in DB, 823 msgs total
+2026-04-29 12:40:03,441 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 12:40:04,927 INFO Connected. Subscribing...
+2026-04-29 12:40:04,928 INFO   Subscribed: BTC
+2026-04-29 12:40:04,928 INFO   Subscribed: ETH
+2026-04-29 12:40:04,928 INFO   Subscribed: SOL
+2026-04-29 12:40:05,269 INFO Sub confirmed: trades
+2026-04-29 12:40:05,321 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:40:05,322 INFO Sub confirmed: trades
+2026-04-29 12:40:05,387 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:40:05,403 INFO Sub confirmed: trades
+2026-04-29 12:40:05,415 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:40:08,847 ERROR Disconnected (no close frame received or sent). Reconnecting in 5s...
+2026-04-29 12:40:13,916 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 12:40:14,809 INFO Connected. Subscribing...
+2026-04-29 12:40:14,810 INFO   Subscribed: BTC
+2026-04-29 12:40:14,810 INFO   Subscribed: ETH
+2026-04-29 12:40:14,810 INFO   Subscribed: SOL
+2026-04-29 12:40:14,990 INFO Sub confirmed: trades
+2026-04-29 12:40:15,025 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:40:15,062 INFO Sub confirmed: trades
+2026-04-29 12:40:15,069 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:40:15,069 INFO Sub confirmed: trades
+2026-04-29 12:40:15,130 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:40:23,427 INFO Flush: 2264 buffered, 2264 in DB, 832 msgs total
+2026-04-29 12:40:51,420 INFO Flush: 2267 buffered, 2267 in DB, 835 msgs total
+2026-04-29 12:41:19,377 INFO Flush: 2274 buffered, 2274 in DB, 840 msgs total
+2026-04-29 12:41:47,266 INFO Flush: 2275 buffered, 2275 in DB, 841 msgs total
+2026-04-29 12:42:15,254 INFO Flush: 2279 buffered, 2279 in DB, 845 msgs total
+2026-04-29 12:42:43,226 INFO Flush: 2282 buffered, 2282 in DB, 848 msgs total
+2026-04-29 12:43:11,157 INFO Flush: 2284 buffered, 2284 in DB, 849 msgs total
+2026-04-29 12:43:25,466 INFO Starting HL Data Daemon — TESTNET
+2026-04-29 12:43:25,496 INFO Database initialized: /home/bakoe/pbs-vibes/data/pbs.db
+2026-04-29 12:43:25,498 INFO Esoteric: KZ=new_york_pm Planet=Moon Lunar=waxing_gibbous DayRuler=Mercury
+2026-04-29 12:43:25,512 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 12:43:26,459 INFO Connected. Subscribing...
+2026-04-29 12:43:26,460 INFO   Subscribed: BTC
+2026-04-29 12:43:26,460 INFO   Subscribed: ETH
+2026-04-29 12:43:26,460 INFO   Subscribed: SOL
+2026-04-29 12:43:26,460 INFO   Subscribed: DOGE
+2026-04-29 12:43:26,620 INFO Sub confirmed: trades
+2026-04-29 12:43:26,665 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:43:26,666 INFO Sub confirmed: trades
+2026-04-29 12:43:26,691 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:43:26,694 INFO Sub confirmed: trades
+2026-04-29 12:43:26,768 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:43:26,769 INFO Sub confirmed: trades
+2026-04-29 12:43:26,809 INFO Sub confirmed: activeAssetCtx
+2026-04-29 12:43:53,524 INFO Flush: 124 buffered, 2408 in DB, 7 msgs total
+2026-04-29 12:44:21,488 INFO Flush: 128 buffered, 2412 in DB, 11 msgs total
+2026-04-29 12:44:49,403 INFO Flush: 129 buffered, 2413 in DB, 12 msgs total
+2026-04-29 12:45:17,368 INFO Flush: 137 buffered, 2421 in DB, 16 msgs total
+2026-04-29 12:45:45,292 INFO Flush: 137 buffered, 2421 in DB, 16 msgs total
+2026-04-29 12:46:13,242 INFO Flush: 137 buffered, 2421 in DB, 16 msgs total

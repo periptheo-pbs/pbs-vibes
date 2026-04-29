@@ -87,7 +87,7 @@ HL_INFO_URL = (
 HL_WALLET = os.environ.get("HL_MAIN_WALLET", "")
 
 # Assets to track
-DEFAULT_COINS = ["BTC", "ETH", "SOL"]
+DEFAULT_COINS = ["BTC", "ETH", "SOL", "DOGE"]
 
 # Timezone mapping for KZ locations
 TZ = {k: pytz.timezone(v.timezone) for k, v in LOCATIONS.items()}
@@ -584,7 +584,15 @@ def print_header(now_utc: datetime.datetime, prices: Dict[str, float], coins: Li
     price_parts = []
     for c in coins:
         p = prices.get(c)
-        price_parts.append(f"{c} ${p:,.0f}" if p else f"{c} \u2014")
+        if p is not None and p > 0:
+            if p >= 1:
+                price_parts.append(f"{c} ${p:,.0f}")
+            elif p >= 0.01:
+                price_parts.append(f"{c} ${p:,.4f}")
+            else:
+                price_parts.append(f"{c} ${p:,.6f}")
+        else:
+            price_parts.append(f"{c} \u2014")
     price_str = " | ".join(price_parts)
 
     print("\u2500" * 72)

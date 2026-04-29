@@ -42,7 +42,7 @@ logging.basicConfig(
 )
 log = logging.getLogger("hl-daemon")
 
-COINS = ["BTC", "ETH", "SOL"]
+COINS = ["BTC", "ETH", "SOL", "DOGE"]
 MAX_TRADES_PER_COIN = 5000
 HEALTH_INTERVAL = 60
 
