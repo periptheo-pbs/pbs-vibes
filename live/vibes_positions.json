@@ -1,0 +1,7 @@
+{
+  "BTC": {"in_position": true, "side": "long", "size": 0.01, "entry_price": 76543, "entry_time": "2026-04-29T00:46:49.425807Z", "leverage": 40, "max_leverage": 40, "last_action": "ENTER", "last_action_time": "2026-04-29T00:46:42.854471Z"},
+  "ETH": {"in_position": false, "leverage": 25, "max_leverage": 25},
+  "SOL": {"in_position": false, "leverage": 10, "max_leverage": 10},
+  "MATIC": {"in_position": false, "leverage": 50, "max_leverage": 50},
+  "DOGE": {"in_position": false, "leverage": 10, "max_leverage": 10}
+}
