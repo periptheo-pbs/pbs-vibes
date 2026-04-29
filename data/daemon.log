@@ -220,3 +220,18 @@
 2026-04-29 11:14:53,923 INFO Sub confirmed: trades
 2026-04-29 11:14:53,928 INFO Sub confirmed: activeAssetCtx
 2026-04-29 11:15:23,335 INFO Flush: 114 buffered, 114 in DB, 18 msgs total
+2026-04-29 11:15:51,448 INFO Flush: 118 buffered, 118 in DB, 22 msgs total
+2026-04-29 11:16:19,636 INFO Flush: 127 buffered, 127 in DB, 29 msgs total
+2026-04-29 11:16:47,693 INFO Flush: 139 buffered, 139 in DB, 37 msgs total
+2026-04-29 11:17:15,898 INFO Flush: 143 buffered, 143 in DB, 41 msgs total
+2026-04-29 11:17:44,055 INFO Flush: 146 buffered, 146 in DB, 43 msgs total
+2026-04-29 11:18:12,201 INFO Flush: 152 buffered, 152 in DB, 48 msgs total
+2026-04-29 11:18:40,346 INFO Flush: 156 buffered, 156 in DB, 52 msgs total
+2026-04-29 11:19:08,340 INFO Flush: 160 buffered, 160 in DB, 55 msgs total
+2026-04-29 11:19:36,497 INFO Flush: 179 buffered, 179 in DB, 68 msgs total
+2026-04-29 11:20:04,598 INFO Flush: 181 buffered, 181 in DB, 69 msgs total
+2026-04-29 11:20:32,648 INFO Flush: 197 buffered, 197 in DB, 75 msgs total
+2026-04-29 11:21:00,802 INFO Flush: 201 buffered, 201 in DB, 79 msgs total
+2026-04-29 11:21:28,913 INFO Flush: 226 buffered, 226 in DB, 88 msgs total
+2026-04-29 11:21:58,954 INFO Flush: 229 buffered, 229 in DB, 91 msgs total
+2026-04-29 11:22:27,011 INFO Flush: 236 buffered, 236 in DB, 98 msgs total
