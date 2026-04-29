@@ -5,3 +5,7 @@ __pycache__/
 dist/
 build/
 .venv/
+
+# Runtime data (daemon buffers)
+data/*.json
+data/*.log
