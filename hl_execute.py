@@ -43,6 +43,15 @@ MAIN_WALLET = os.environ.get("HL_MAIN_WALLET", "")
 API_SECRET = os.environ.get("HL_SECRET_KEY", "")
 API_WALLET = os.environ.get("HL_WALLET_API", "")
 
+def _fmt_px(px: float) -> str:
+    """Format a price with adaptive decimals for sub-$1 assets."""
+    if px < 0.01:
+        return f"${px:,.6f}"
+    if px < 1:
+        return f"${px:,.4f}"
+    return f"${px:,.0f}"
+
+
 # ── Clients ────────────────────────────────────────────────────────────
 def get_info():
     return Info(BASE_URL, skip_ws=True)
@@ -191,9 +200,10 @@ def print_status():
             side = pos["side"].upper()
             pnl = pos["upnl"]
             pnl_s = "+" if pnl >= 0 else ""
-            liq = f"  liq ${pos['liq_px']:,.0f}" if pos["liq_px"] > 0 else ""
-            print(f"    {side} {pos['size']:.5f} {pos['coin']} @ ${pos['entry']:,.0f} "
-                  f"({pos['leverage']:.0f}x)  PnL {pnl_s}${pnl:,.2f}{liq}")
+            liq = pos['liq_px']
+            liq_s = f"  liq {_fmt_px(liq)}" if liq > 0 else ""
+            print(f"    {side} {pos['size']:.5f} {pos['coin']} @ {_fmt_px(pos['entry'])} "
+                  f"({pos['leverage']:.0f}x)  PnL {pnl_s}${pnl:,.2f}{liq_s}")
     else:
         print(f"\n  Positions: NONE")
 

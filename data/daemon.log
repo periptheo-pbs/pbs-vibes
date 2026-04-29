@@ -859,3 +859,39 @@
 2026-04-29 14:07:39,087 INFO Flush: 2956 buffered, 5240 in DB, 957 msgs total
 2026-04-29 14:08:06,958 INFO Flush: 2958 buffered, 5242 in DB, 959 msgs total
 2026-04-29 14:08:34,750 INFO Flush: 2959 buffered, 5243 in DB, 960 msgs total
+2026-04-29 14:09:02,620 INFO Flush: 2961 buffered, 5245 in DB, 962 msgs total
+2026-04-29 14:09:30,469 INFO Flush: 2961 buffered, 5245 in DB, 962 msgs total
+2026-04-29 14:09:58,298 INFO Flush: 2968 buffered, 5252 in DB, 963 msgs total
+2026-04-29 14:10:26,175 INFO Flush: 2971 buffered, 5255 in DB, 966 msgs total
+2026-04-29 14:10:53,944 INFO Flush: 2974 buffered, 5258 in DB, 969 msgs total
+2026-04-29 14:11:21,804 INFO Flush: 2977 buffered, 5261 in DB, 972 msgs total
+2026-04-29 14:11:39,756 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 14:11:41,288 INFO Connected. Subscribing...
+2026-04-29 14:11:41,288 INFO   Subscribed: BTC
+2026-04-29 14:11:41,288 INFO   Subscribed: ETH
+2026-04-29 14:11:41,288 INFO   Subscribed: SOL
+2026-04-29 14:11:41,289 INFO   Subscribed: DOGE
+2026-04-29 14:11:41,643 INFO Sub confirmed: trades
+2026-04-29 14:11:41,680 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:41,681 INFO Sub confirmed: trades
+2026-04-29 14:11:41,710 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:41,710 INFO Sub confirmed: trades
+2026-04-29 14:11:41,799 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:41,800 INFO Sub confirmed: trades
+2026-04-29 14:11:41,834 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:45,050 ERROR Disconnected (no close frame received or sent). Reconnecting in 5s...
+2026-04-29 14:11:49,651 INFO Flush: 3097 buffered, 5381 in DB, 976 msgs total
+2026-04-29 14:11:50,104 INFO Connecting to wss://api.hyperliquid-testnet.xyz/ws...
+2026-04-29 14:11:50,998 INFO Connected. Subscribing...
+2026-04-29 14:11:50,998 INFO   Subscribed: BTC
+2026-04-29 14:11:50,999 INFO   Subscribed: ETH
+2026-04-29 14:11:50,999 INFO   Subscribed: SOL
+2026-04-29 14:11:50,999 INFO   Subscribed: DOGE
+2026-04-29 14:11:51,173 INFO Sub confirmed: trades
+2026-04-29 14:11:51,216 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:51,235 INFO Sub confirmed: trades
+2026-04-29 14:11:51,251 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:51,252 INFO Sub confirmed: trades
+2026-04-29 14:11:51,330 INFO Sub confirmed: activeAssetCtx
+2026-04-29 14:11:51,330 INFO Sub confirmed: trades
+2026-04-29 14:11:51,369 INFO Sub confirmed: activeAssetCtx

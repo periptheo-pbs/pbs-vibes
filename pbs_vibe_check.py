@@ -86,6 +86,15 @@ HL_INFO_URL = (
 )
 HL_WALLET = os.environ.get("HL_MAIN_WALLET", "")
 
+def _fmt_px(px: float) -> str:
+    """Format a price with adaptive decimals for sub-$1 assets."""
+    if px < 0.01:
+        return f"${px:,.6f}"
+    if px < 1:
+        return f"${px:,.4f}"
+    return f"${px:,.0f}"
+
+
 # Assets to track
 DEFAULT_COINS = ["BTC", "ETH", "SOL", "DOGE"]
 
@@ -700,7 +709,7 @@ def print_technicals(coin: str, m1_candles: List[dict], h4_candles: List[dict]) 
         e9_a = "\u25b2" if e9 > e21 else ("\u25bc" if e9 < e21 else "\u2500")
         e21_a = "\u25b2" if e21 > e9 else ("\u25bc" if e21 < e9 else "\u2500")
         rsi_s = f"RSI(14) {r14_1m:.1f}" if r14_1m is not None else ""
-        print(f"  1m: EMA9 ${e9:,.0f} {e9_a}  EMA21 ${e21:,.0f} {e21_a}  {rsi_s}")
+        print(f"  1m: EMA9 {_fmt_px(e9)} {e9_a}  EMA21 {_fmt_px(e21)} {e21_a}  {rsi_s}")
     else:
         print(f"  1m: EMA9 \u2014  EMA21 \u2014")
 
@@ -708,7 +717,7 @@ def print_technicals(coin: str, m1_candles: List[dict], h4_candles: List[dict]) 
         e20_a = "\u25b2" if e20 > e50 else ("\u25bc" if e20 < e50 else "\u2500")
         e50_a = "\u25b2" if e50 > e20 else ("\u25bc" if e50 < e20 else "\u2500")
         rsi_s = f"RSI(14) {r14_4h:.1f}" if r14_4h is not None else ""
-        print(f"  4h: EMA20 ${e20:,.0f} {e20_a}  EMA50 ${e50:,.0f} {e50_a}  {rsi_s}")
+        print(f"  4h: EMA20 {_fmt_px(e20)} {e20_a}  EMA50 {_fmt_px(e50)} {e50_a}  {rsi_s}")
     else:
         print(f"  4h: EMA20 \u2014  EMA50 \u2014")
 
@@ -747,8 +756,8 @@ def print_microstructure(coin: str, trades: List[TradeTick],
             else:
                 pressure = "\u26aa balanced"
             print(f"  Trapped:")
-            print(f"    Longs above:  {tl}" + (f"  (avg entry: ${avg_tl:,.0f})" if avg_tl else ""))
-            print(f"    Shorts below: {ts}" + (f"  (avg entry: ${avg_ts:,.0f})" if avg_ts else ""))
+            print(f"    Longs above:  {tl}" + (f"  (avg entry: {_fmt_px(avg_tl)})" if avg_tl else ""))
+            print(f"    Shorts below: {ts}" + (f"  (avg entry: {_fmt_px(avg_ts)})" if avg_ts else ""))
             print(f"    Pressure:     {pressure}")
 
         liq = liquidation_stats(trades, 60)
@@ -821,8 +830,8 @@ def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
             upnl = p["upnl"]
             pnl_s = "+" if upnl >= 0 else ""
             liq = p.get("liquidation_px", 0)
-            liq_s = f"  liq ${liq:,.0f}" if liq > 0 else ""
-            print(f"    {side} {size:.4f} {coin} @ ${entry:,.0f} ({lev:.0f}x)  PnL {pnl_s}${upnl:,.2f}{liq_s}")
+            liq_s = f"  liq {_fmt_px(liq)}" if liq > 0 else ""
+            print(f"    {side} {size:.4f} {coin} @ {_fmt_px(entry)} ({lev:.0f}x)  PnL {pnl_s}${upnl:,.2f}{liq_s}")
     else:
         print(f"  Positions: NONE")
 
