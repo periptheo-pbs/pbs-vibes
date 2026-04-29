@@ -9,3 +9,4 @@ build/
 # Runtime data (daemon buffers)
 data/*.json
 data/*.log
+data/*.db
