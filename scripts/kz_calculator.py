@@ -1182,6 +1182,117 @@ def print_market_microstructure(coin: str = "BTC") -> None:
         print_liquidations_section(trades)
 
 
+def fetch_hl_portfolio(coin: str = "BTC") -> Dict[str, object]:
+    """Fetch user's perp + spot portfolio from Hyperliquid.
+    Returns dict with balances and positions.
+    """
+    try:
+        wallet = os.environ.get("HL_MAIN_WALLET")
+        if not wallet:
+            return {}
+
+        result = {"wallet": wallet}
+
+        # Fetch perp state
+        try:
+            resp = requests.post(MARKET_API, json={"type": "clearinghouseState", "user": wallet}, timeout=8)
+            perp_state = resp.json()
+            if isinstance(perp_state, dict):
+                # Perp balance
+                margin = perp_state.get("marginSummary", {})
+                result["perp_equity"] = float(margin.get("accountValue", 0))
+
+                # Perp positions
+                positions = perp_state.get("assetPositions", [])
+                for pos in positions:
+                    if isinstance(pos, dict) and pos.get("coin") == coin:
+                        pos_info = pos.get("position", {})
+                        result["position"] = {
+                            "side": pos_info.get("side", "?"),
+                            "size": float(pos_info.get("szi", 0)),
+                            "entry_price": float(pos_info.get("entryPx", 0)),
+                            "leverage": pos_info.get("leverage", {}).get("value", 0),
+                            "unrealized_pnl": float(pos_info.get("unrealizedPnl", 0)),
+                        }
+                        break
+        except Exception:
+            result["perp_equity"] = 0.0
+
+        # Fetch spot state
+        try:
+            resp2 = requests.post(MARKET_API, json={"type": "spotClearinghouseState", "user": wallet}, timeout=8)
+            spot_state = resp2.json()
+            if isinstance(spot_state, dict):
+                balances = spot_state.get("balances", [])
+                spot_total = 0.0
+                for bal in balances:
+                    if isinstance(bal, dict) and float(bal.get("total", 0)) > 0:
+                        coin_name = bal.get("coin", "")
+                        total = float(bal.get("total", 0))
+                        # Simple: assume USDC = $1
+                        if "USDC" in coin_name:
+                            spot_total += total
+                        else:
+                            # Would need price conversion for other tokens
+                            spot_total += total
+                result["spot_balance"] = spot_total
+        except Exception:
+            result["spot_balance"] = 0.0
+
+        # Total equity
+        perp_eq = result.get("perp_equity", 0.0)
+        spot_bal = result.get("spot_balance", 0.0)
+        result["total_equity"] = perp_eq + spot_bal
+
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def print_portfolio_info(coin: str = "BTC") -> None:
+    """Print user's HL portfolio: perp equity, spot balance, positions."""
+    print(f"\n── Portfolio (Hyperliquid) ──")
+    portfolio = fetch_hl_portfolio(coin)
+
+    if "error" in portfolio:
+        print(f"  Error fetching portfolio: {portfolio['error']}")
+        return
+
+    if not portfolio:
+        print(f"  No portfolio data (wallet not set or API error)")
+        return
+
+    # Perp equity
+    perp_eq = portfolio.get("perp_equity", 0.0)
+    print(f"  Perp Equity:    ${perp_eq:,.2f}")
+
+    # Spot balance
+    spot_bal = portfolio.get("spot_balance", 0.0)
+    print(f"  Spot Balance:   ${spot_bal:,.2f}")
+
+    # Total equity
+    total_eq = portfolio.get("total_equity", 0.0)
+    print(f"  Total Equity:   ${total_eq:,.2f}")
+
+    # Position
+    pos = portfolio.get("position")
+    if pos:
+        side = pos["side"].upper()
+        size = pos["size"]
+        entry = pos["entry_price"]
+        lev = pos["leverage"]
+        pnl = pos["unrealized_pnl"]
+        pnl_sign = "+" if pnl >= 0 else ""
+        print(f"  Position: {side} {size:.4f} {coin} @ ${entry:,.2f} ({lev}x)")
+        print(f"  Unrealized PnL: {pnl_sign}${pnl:,.2f}")
+    else:
+        print(f"  Position: NONE")
+
+    # Open orders count
+    orders = portfolio.get("orders", [])
+    print(f"  Open Orders: {len(orders)}")
+
+
 def print_footer(now_utc: datetime.datetime) -> None:
     print(f'\n  Updated: {now_utc:%Y-%m-%d %H:%M:%S} UTC')
     print('═' * 68)
@@ -1190,6 +1301,12 @@ def print_footer(now_utc: datetime.datetime) -> None:
 # ─── Entrypoint ─────────────────────────────────────────────────────────────
 
 def main() -> int:
+    # Argument parsing
+    import argparse
+    parser = argparse.ArgumentParser(description='KZ Calculator - Planetary hours, kill zones, indicators')
+    parser.add_argument('--asset', type=str, default='BTC', help='Asset symbol (BTC, ETH, SOL, etc.)')
+    args = parser.parse_args()
+    
     now_utc = datetime.datetime.now(pytz.UTC)
 
     # 1. Determine active kill zone and current planetary hour
@@ -1228,6 +1345,9 @@ def main() -> int:
 
     # 7. Lunar phase context
     print_lunar_phases(now_utc)
+
+    # 7a. Portfolio info (Hyperliquid)
+    print_portfolio_info(args.asset)
 
     # 8. Next kill zone
     print_next_kill_zone(now_utc, active_kz)

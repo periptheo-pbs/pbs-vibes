@@ -166,8 +166,8 @@ async def listen_coin(coin: str) -> None:
                         if msg.get("channel") != "trades":
                             continue
 
-                        trades = []
                         data_val = msg.get("data")
+                        trades = []
                         if isinstance(data_val, list):
                             trades = data_val
                         elif isinstance(data_val, dict):
@@ -175,20 +175,20 @@ async def listen_coin(coin: str) -> None:
                         else:
                             continue
 
-                    for t in trades:
-                        try:
-                            side = t["side"]
-                            price = float(t["px"])
-                            size = float(t["sz"])
-                            ts_ms = int(t["time"])
-                            ts = ts_ms / 1000.0
-                            tid = t.get("tid", "")
-                            hash_val = t.get("hash", "")
+                        for t in trades:
+                            try:
+                                side = t["side"]
+                                price = float(t["px"])
+                                size = float(t["sz"])
+                                ts_ms = int(t["time"])
+                                ts = ts_ms / 1000.0
+                                tid = t.get("tid", "")
+                                hash_val = t.get("hash", "")
 
-                            insert_trade(ts, price, size, side, tid, hash_val, coin)
-                        except (KeyError, ValueError, TypeError) as e:
-                            log(f"Failed to parse {coin} trade: {e} — {t}", "WARN")
-                            continue
+                                insert_trade(ts, price, size, side, tid, hash_val, coin)
+                            except (KeyError, ValueError, TypeError) as e:
+                                log(f"Failed to parse {coin} trade: {e} — {t}", "WARN")
+                                continue
 
                     # Periodic purge (every ~1000 trades handled)
                     now = time.time()
