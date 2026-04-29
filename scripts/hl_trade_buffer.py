@@ -38,7 +38,13 @@ LOG_PATH = PROJECT_ROOT / "logs" / "hl_trade_buffer.log"
 RETENTION_SECONDS = 24 * 3600
 
 # WebSocket connection
-MAINNET_WS_URL = "wss://api.hyperliquid.xyz/ws"
+# Default: testnet (override with HL_WS_URL env)
+WS_URL_ENV = os.environ.get("HL_WS_URL", "")
+if WS_URL_ENV:
+    MAINNET_WS_URL = WS_URL_ENV
+else:
+    # Default to testnet (user's primary environment)
+    MAINNET_WS_URL = "wss://api.hyperliquid-testnet.xyz/ws"
 # Perpetual swap symbols to subscribe (can be overridden by HL_TRADE_COINS env, comma-separated)
 COINS_ENV = os.environ.get("HL_TRADE_COINS", "BTC")
 COINS = [c.strip() for c in COINS_ENV.split(",") if c.strip()]
