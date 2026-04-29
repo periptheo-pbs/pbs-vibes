@@ -350,6 +350,10 @@ def hl_portfolio() -> Dict[str, object]:
             result["perp_equity"] = float(margin.get("accountValue", 0))
         except (ValueError, TypeError):
             result["perp_equity"] = 0.0
+        try:
+            result["margin_used"] = float(margin.get("totalMarginUsed", 0))
+        except (ValueError, TypeError):
+            result["margin_used"] = 0.0
 
         positions = []
         for ap in perp.get("assetPositions", []):
@@ -798,10 +802,12 @@ def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
     spot_bal = portfolio.get("spot_balance", 0.0)
     total_eq = portfolio.get("total_equity", 0.0)
 
+    avail = spot_bal - (portfolio.get("margin_used", 0) or 0)
     print(f"\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
     print(f"  Perp Equity:    ${perp_eq:,.2f}")
     print(f"  Spot Balance:   ${spot_bal:,.2f}")
     print(f"  Total Equity:   ${total_eq:,.2f}")
+    print(f"  AVAILABLE:      ${avail:,.2f}  (spot minus margin — for new positions)")
 
     positions = portfolio.get("positions", [])
     if positions:

@@ -98,9 +98,12 @@ def api_post(path, data):
         r.raise_for_status()
         return r.json()
     except requests.exceptions.HTTPError as e:
-        body = e.response.json() if e.response else {}
+        try:
+            body = e.response.json() if e.response else {}
+        except Exception:
+            body = e.response.text[:200] if e.response else "(no response)"
         print(f"[ERROR] POST {path}: {e} — {body}")
-        return body
+        return {"error": str(e), "body": body}
     except Exception as e:
         print(f"[ERROR] POST {path}: {e}")
         return None
@@ -380,7 +383,7 @@ def decide_trades(balance_data, market_open, market_ctx):
     # ── Check existing positions for exits ──
     for pos in positions:
         sym = pos["symbol"]
-        up_pct = pos.get("unrealized_pl_pct", 0) * 100
+        up_pct = pos.get("unrealized_pl_pct", 0)  # API returns actual %, not decimal
         qty = pos.get("qty", 0)
         
         if up_pct >= CONFIG["take_profit_pct"] and qty > 0:
@@ -483,7 +486,7 @@ def decide_trades(balance_data, market_open, market_ctx):
 def generate_thought(balance_data, market_ctx, timing_quality):
     """Generate a market thought for the public feed."""
     positions = balance_data.get("positions", [])
-    total_return = balance_data.get("total_return_pct", 0) * 100
+    total_return = balance_data.get("total_return_pct", 0)  # API returns actual %
     
     spy_data = market_ctx.get("market", {}).get("spy_return_1d", 0)
     spy_pct = spy_data * 100 if spy_data else 0
@@ -531,13 +534,13 @@ def run_cycle(cycle_type="regular"):
     
     cash = balance.get("cash", 0)
     total_equity = balance.get("total_equity", 0)
-    total_return = balance.get("total_return_pct", 0) * 100
+    total_return = balance.get("total_return_pct", 0)  # API returns actual %
     positions = balance.get("positions", [])
     
     print(f"[BALANCE] Cash: ${cash:,.2f} | Equity: ${total_equity:,.2f} | Return: {total_return:+.2f}%")
     print(f"[POSITIONS] {len(positions)} active")
     for p in positions:
-        up = p.get("unrealized_pl_pct", 0) * 100
+        up = p.get("unrealized_pl_pct", 0)  # API returns actual %
         print(f"  {p['symbol']}: {p.get('qty',0)} @ ${p.get('avg_cost',0):.2f} → ${p.get('current_price',0):.2f} ({up:+.1f}%)")
     
     market_ctx = get_market_context()

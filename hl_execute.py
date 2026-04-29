@@ -177,11 +177,13 @@ def print_status():
     print(f"\n{'='*50}")
     print(f"  HL Portfolio ({net})")
     print(f"{'='*50}")
+    avail = p['spot_balance'] - p.get('total_margin_used', 0)
     print(f"  Total Equity:   ${p['total_equity']:,.2f}")
     print(f"  Perp Equity:    ${p['perp_equity']:,.2f}")
     print(f"  Spot Balance:   ${p['spot_balance']:,.2f}")
     print(f"  Margin Used:    ${p.get('total_margin_used', 0):,.2f}")
-    print(f"  Withdrawable:   ${p.get('withdrawable', 0):,.2f}")
+    print(f"  AVAILABLE:      ${avail:,.2f}  (spot - margin used, for new positions)")
+    print(f"  Withdrawable:   ${p.get('withdrawable', 0):,.2f}  (maintenance buffer only — NOT available capital)")
 
     if p["positions"]:
         print(f"\n  Positions ({len(p['positions'])}):")
