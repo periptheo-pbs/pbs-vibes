@@ -542,12 +542,12 @@ def print_header(now_utc: datetime.datetime, prices: Dict[str, float], coins: Li
         price_parts.append(f"{c} ${p:,.0f}" if p else f"{c} \u2014")
     price_str = " | ".join(price_parts)
 
-    print("\u2500" * 60)
+    print("\u2500" * 72)
     print(f"  PBS VIBE CHECK \u2014 {now_utc:%Y-%m-%d %H:%M} UTC")
     print(f"  Day: {weekday_name(now_utc.weekday())}  |  Day Ruler: {PLANET_EMOJI.get(day_ruler, '?')} {day_ruler}")
     print(f"  {price_str}")
     print(f"  Network: {'TESTNET' if USE_TESTNET else 'MAINNET'}")
-    print("\u2500" * 60)
+    print("\u2500" * 72)
 
 
 def print_active_kz_detail(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
@@ -595,13 +595,13 @@ def print_active_kz_detail(now_utc: datetime.datetime, active_kz: Optional[str])
     hd = HERMETIC_DATA.get(planet)
     if hd:
         print(f"\n  \u26a1 Hermetic Correspondences \u2014 {planet} \u26a1")
-        for key in ["sephira", "angel", "metal", "color", "day", "virtue", "vice", "tarot", "alchemy"]:
+        for key in ["sephira", "metal", "virtue", "vice"]:
             print(f"    {key.capitalize():<10} {hd[key]}")
 
 
 def print_kz_table(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
-    print(f"\n{'Kill Zone':<20} {'UTC':<14} {'Planetary Hours'}")
-    print("\u2500" * 70)
+    print(f"\n\n{'Kill Zone':<20} {'UTC':<14} {'Planetary Hours'}")
+    print("\u2500" * 72)
 
     for kz_name in KZ_DISPLAY_ORDER:
         kz_def = KILL_ZONES[kz_name]
@@ -638,7 +638,7 @@ def print_technicals(coin: str, m1_candles: List[dict], h4_candles: List[dict]) 
     e50 = ema(closes_4h, 50)
     r14_4h = rsi(closes_4h, 14)
 
-    print(f"\n\u2500\u2500 Technical Indicators \u2014 {coin} \u2500\u2500")
+    print(f"\n\n\u2500\u2500 Technical Indicators \u2014 {coin} \u2500\u2500")
     if e9 is not None and e21 is not None:
         e9_a = "\u25b2" if e9 > e21 else ("\u25bc" if e9 < e21 else "\u2500")
         e21_a = "\u25b2" if e21 > e9 else ("\u25bc" if e21 < e9 else "\u2500")
@@ -662,21 +662,18 @@ def print_microstructure(coin: str, trades: List[TradeTick],
                          price: Optional[float], ctx: Dict[str, Optional[float]],
                          tech: Dict[str, Optional[float]]) -> None:
     """Print microstructure data."""
-    print(f"\n\u2500\u2500 Market Microstructure \u2014 {coin} \u2500\u2500")
-
-    if price:
-        print(f"  Current Price:   ${price:,.0f}")
+    print(f"\n\u2500\u2500 Microstructure \u2014 {coin} \u2500\u2500")
 
     oi = ctx.get("oi")
     funding = ctx.get("funding")
     if oi:
-        print(f"  Open Interest:   {oi:,.0f} {coin}")
+        print(f"  OI: {oi:,.0f} {coin}")
     if funding is not None:
         f_ann = funding * 24 * 365 * 100
-        print(f"  Funding Rate:    {funding*100:+.6f}%  ({f_ann:+.1f}% ann)")
+        print(f"  Funding:    {funding*100:+.6f}%  ({f_ann:+.1f}% ann)")
 
     if trades:
-        print(f"  Cumulative Delta:")
+        print(f"  Delta:")
         for w in [1, 5, 15, 60]:
             cd = cumulative_delta(trades, w)
             sign = "+" if cd >= 0 else ""
@@ -692,7 +689,7 @@ def print_microstructure(coin: str, trades: List[TradeTick],
                 pressure = "\U0001f7e2 shorts trapped \u2192 squeeze \u2191"
             else:
                 pressure = "\u26aa balanced"
-            print(f"  Net Trapped:")
+            print(f"  Trapped:")
             print(f"    Longs above:  {tl}" + (f"  (avg entry: ${avg_tl:,.0f})" if avg_tl else ""))
             print(f"    Shorts below: {ts}" + (f"  (avg entry: ${avg_ts:,.0f})" if avg_ts else ""))
             print(f"    Pressure:     {pressure}")
@@ -704,7 +701,7 @@ def print_microstructure(coin: str, trades: List[TradeTick],
             print(f"  Liquidations (60m): {liq['total']}  (${liq['notional']:,.0f})  [{activity}]")
             print(f"    Longs rekt:  {liq['long_liqs']}  |  Shorts rekt: {liq['short_liqs']}")
         else:
-            print(f"  Liquidations (60m): none")
+            print(f"  Liqs (60m): none")
 
 
 def print_lunar(now_utc: datetime.datetime) -> None:
@@ -730,13 +727,13 @@ def print_lunar(now_utc: datetime.datetime) -> None:
 
     in_fm_window = days_to_fm <= 1.0
 
-    print(f"\n\u2500\u2500 Lunar Phases \u2500\u2500")
+    print(f"\n\n\u2500\u2500 Lunar Phases \u2500\u2500")
     print(f"  Current:     {emoji} {display}")
     print(f"  Arc:         {arc}")
     print(f"  Full Moon:   {days_to_fm:.1f}d away" + ("  \u26a0 IN FM WINDOW \u2014 tighten stops, size -50%" if in_fm_window else ""))
     print(f"  New Moon:    {days_to_nm:.1f}d away")
 
-    upcoming = get_upcoming_lunar_phases(now_utc, count=7)
+    upcoming = get_upcoming_lunar_phases(now_utc, count=5)
     print(f"  Next transitions:")
     for dt, pname, _ in upcoming:
         pe, pd = PHASE_DISPLAY.get(pname, ("\U0001f319", pname))
@@ -748,7 +745,7 @@ def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
     spot_bal = portfolio.get("spot_balance", 0.0)
     total_eq = portfolio.get("total_equity", 0.0)
 
-    print(f"\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
+    print(f"\n\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
     print(f"  Perp Equity:    ${perp_eq:,.2f}")
     print(f"  Spot Balance:   ${spot_bal:,.2f}")
     print(f"  Total Equity:   ${total_eq:,.2f}")
@@ -800,7 +797,7 @@ def print_next_kz(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
     delta_s = int((best_start - now_utc).total_seconds())
     planet = get_planet_for_kz(best_start.weekday(), best_start, best_name) or "?"
 
-    print(f"\n\u2500\u2500 Next Kill Zone \u2500\u2500")
+    print(f"\n\n\u2500\u2500 Next Kill Zone \u2500\u2500")
     print(f"  {kz_def['label']}: starts in {minutes_fmt(delta_s)}")
     print(f"  UTC:   {fmt_time(best_start)}")
     print(f"  Local: {fmt_time(local_start)} ({TZ[loc_key].zone})")
@@ -808,8 +805,7 @@ def print_next_kz(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
 
 
 def print_footer(now_utc: datetime.datetime) -> None:
-    print(f"\n  Updated: {now_utc:%Y-%m-%d %H:%M:%S} UTC")
-    print("\u2500" * 60)
+    pass
 
 
 # ── Main ─────────────────────────────────────────────────────────────────────
