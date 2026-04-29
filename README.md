@@ -80,10 +80,5 @@ See [GitHub Issues](https://github.com/periptheo-pbs/pbs-vibes/issues) for activ
 2. HL trade log PnL calculation broken (only Saturnalia correct)
 3. kz_calculator.py fails to fetch testnet wallet balances across all addresses
 
-## 📚 Related Strategy Docs
-- V37 Lunar + 4x/3yr Macro (Kraken best performer)
-- Hybrid Scalper Phase 2 (multi-asset, Mars=BEAR)
-- Planetary Lab analytics core
-
 ## License
 MIT
