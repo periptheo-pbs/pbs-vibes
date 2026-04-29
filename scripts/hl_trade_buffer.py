@@ -150,20 +150,30 @@ async def listen_coin(coin: str) -> None:
                     except json.JSONDecodeError:
                         continue
 
-                    if not isinstance(msg, dict):
-                        continue
-
-                    if msg.get("channel") != "trades":
-                        continue
-
-                    trades = []
-                    data_val = msg.get("data")
-                    if isinstance(data_val, list):
-                        trades = data_val
-                    elif isinstance(data_val, dict):
-                        trades = data_val.get("trades", [])
+                    # Handle both single dict and list of messages
+                    msgs = []
+                    if isinstance(msg, dict):
+                        msgs = [msg]
+                    elif isinstance(msg, list):
+                        msgs = msg
                     else:
                         continue
+
+                    for msg in msgs:
+                        if not isinstance(msg, dict):
+                            continue
+
+                        if msg.get("channel") != "trades":
+                            continue
+
+                        trades = []
+                        data_val = msg.get("data")
+                        if isinstance(data_val, list):
+                            trades = data_val
+                        elif isinstance(data_val, dict):
+                            trades = data_val.get("trades", [])
+                        else:
+                            continue
 
                     for t in trades:
                         try:
