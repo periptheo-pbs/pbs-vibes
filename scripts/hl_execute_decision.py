@@ -66,9 +66,9 @@ def load_state() -> Dict[str, Any]:
         with open(STATE_FILE) as f:
             return json.load(f)
     return {
-        'BTC': {'in_position': False, 'side': None, 'size': 0.0, 'entry_price': None, 'entry_time': None, 'leverage': 1, 'max_leverage': 40, 'last_action': None, 'last_action_time': None},
-        'ETH': {'in_position': False, 'side': None, 'size': 0.0, 'entry_price': None, 'entry_time': None, 'leverage': 1, 'max_leverage': 25, 'last_action': None, 'last_action_time': None},
-        'SOL': {'in_position': False, 'side': None, 'size': 0.0, 'entry_price': None, 'entry_time': None, 'leverage': 1, 'max_leverage': 10, 'last_action': None, 'last_action_time': None},
+        'BTC': {'in_position': False, 'side': None, 'size': 0.0, 'entry_price': None, 'entry_time': None, 'leverage': 1, 'max_leverage': 40, 'sl_price': None, 'tp_price': None, 'last_action': None, 'last_action_time': None},
+        'ETH': {'in_position': False, 'side': None, 'size': 0.0, 'entry_price': None, 'entry_time': None, 'leverage': 1, 'max_leverage': 25, 'sl_price': None, 'tp_price': None, 'last_action': None, 'last_action_time': None},
+        'SOL': {'in_position': False, 'side': None, 'size': 0.0, 'entry_price': None, 'entry_time': None, 'leverage': 1, 'max_leverage': 10, 'sl_price': None, 'tp_price': None, 'last_action': None, 'last_action_time': None},
     }
 
 def get_max_leverage(coin: str) -> int:
@@ -299,12 +299,14 @@ def execute_decision(decision: Dict[str, Any], run_id: str) -> Dict[str, Any]:
         append_execution_log(result)
         return result
 
-    # —— Extract decision fields ——
+    # Extract decision fields
     action = decision.get('action', 'HOLD').upper()
     side = decision.get('side')          # 'long' | 'short' | None
     size = float(decision.get('size', decision.get('size_btc', 0)))
     offset_bps = int(decision.get('limit_offset_bps', LIMIT_OFFSET_BPS))
     leverage = int(decision.get('leverage', 1))
+    sl_price = decision.get('sl_price')
+    tp_price = decision.get('tp_price')
 
     # Clamp leverage to asset max
     leverage = int(decision.get('leverage', state.get('max_leverage', 10)))
@@ -353,6 +355,8 @@ def execute_decision(decision: Dict[str, Any], run_id: str) -> Dict[str, Any]:
                     'entry_price': limit_price,
                     'entry_time': datetime.utcnow().isoformat() + 'Z',
                     'leverage': leverage,
+                    'sl_price': sl_price,
+                    'tp_price': tp_price,
                     'last_action': 'ENTER',
                     'last_action_time': result['timestamp'],
                 })

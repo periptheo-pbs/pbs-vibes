@@ -28,6 +28,8 @@ Your decision must be a valid JSON object with these exact keys:
   size      → float (asset amount)
   limit_offset_bps → int (0–25)
   leverage   → int (1–40, max per asset)
+  sl_price  → float (stop-loss price, null if none)
+  tp_price  → float (take-profit price, null if none)
   reason    → short hyphenated tag
 
 **Output EXACTLY three parts in this order:**
@@ -49,6 +51,8 @@ Do NOT add any extra lines, ASCII art, framing, or repeated headers.
   "size": 0.01,
   "limit_offset_bps": 5,
   "leverage": 5,
+  "sl_price": 74500.0,
+  "tp_price": 78500.0,
   "reason": "jupiter-hour-frontrun"
 }
 The JSON must be parseable by json.loads().
