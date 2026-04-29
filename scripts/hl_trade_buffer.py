@@ -118,23 +118,22 @@ def query_trades_since(since: float, coin: str = "BTC") -> list[dict]:
         )
         return [dict(row) for row in cur.fetchall()]
 
-# ── WebSocket Subscription ────────────────────────────────────────────────────
+# ── WebSocket Subscription ────────────────────────────────────────────────
 
-SUBSCRIBE_MSG = {
-    "method": "subscribe",
-    "subscription": {
-        "type": "trades",
-        "coin": COIN
-    }
-}
-
-async def trade_listener() -> None:
-    """Main WebSocket loop: connect, subscribe, and buffer trades."""
+async def listen_coin(coin: str) -> None:
+    """Listen to trades for a single coin, reconnect on failure."""
     backoff = 1.0
+    SUBSCRIBE_MSG = {
+        "method": "subscribe",
+        "subscription": {
+            "type": "trades",
+            "coin": coin
+        }
+    }
     while True:
         try:
             async with websockets.connect(MAINNET_WS_URL, ping_interval=20, ping_timeout=10) as ws:
-                log(f"WebSocket connected → subscribing to {COIN} trades")
+                log(f"WebSocket connected → subscribing to {coin} trades")
                 await ws.send(json.dumps(SUBSCRIBE_MSG))
                 backoff = 1.0  # reset on success
 
@@ -145,15 +144,12 @@ async def trade_listener() -> None:
                     except json.JSONDecodeError:
                         continue
 
-                    # HL sends a variety of message formats; filter for trade arrays
                     if not isinstance(msg, dict):
                         continue
 
-                    # Trade messages are: {"channel":"trades","data":{...}}
                     if msg.get("channel") != "trades":
                         continue
-                    # HL trade messages: {"channel":"trades","data":[{...},{...}]}
-                    # Some variants also have {"channel":"trades","data":{"trades":[...]}}
+
                     trades = []
                     data_val = msg.get("data")
                     if isinstance(data_val, list):
@@ -162,10 +158,10 @@ async def trade_listener() -> None:
                         trades = data_val.get("trades", [])
                     else:
                         continue
+
                     for t in trades:
                         try:
-                            # Parse trade fields
-                            side = t["side"]           # 'B' or 'A'
+                            side = t["side"]
                             price = float(t["px"])
                             size = float(t["sz"])
                             ts_ms = int(t["time"])
@@ -173,9 +169,9 @@ async def trade_listener() -> None:
                             tid = t.get("tid", "")
                             hash_val = t.get("hash", "")
 
-                            insert_trade(ts, price, size, side, tid, hash_val)
+                            insert_trade(ts, price, size, side, tid, hash_val, coin)
                         except (KeyError, ValueError, TypeError) as e:
-                            log(f"Failed to parse trade: {e} — {t}", "WARN")
+                            log(f"Failed to parse {coin} trade: {e} — {t}", "WARN")
                             continue
 
                     # Periodic purge (every ~1000 trades handled)
@@ -187,13 +183,20 @@ async def trade_listener() -> None:
                             log(f"Purged {deleted} trades older than {RETENTION_SECONDS/3600:.0f}h")
 
         except (websockets.ConnectionClosed, ConnectionRefusedError) as e:
-            log(f"WebSocket disconnected: {e} — reconnecting in {backoff:.0f}s")
+            log(f"WebSocket disconnected for {coin}: {e} — reconnecting in {backoff:.0f}s")
             await asyncio.sleep(backoff)
             backoff = min(backoff * 1.5, 60)
         except Exception as e:
-            log(f"Unexpected error: {e} — reconnecting in {backoff:.0f}s", "ERROR")
+            log(f"Unexpected error for {coin}: {e} — reconnecting in {backoff:.0f}s", "ERROR")
             await asyncio.sleep(backoff)
             backoff = min(backoff * 1.5, 60)
+
+
+async def trade_listener() -> None:
+    """Launch one listener per coin concurrently."""
+    log(f"Starting trade listeners for coins: {', '.join(COINS)}")
+    tasks = [listen_coin(coin) for coin in COINS]
+    await asyncio.gather(*tasks)
 
 # ── Signal Handling ───────────────────────────────────────────────────────────
 
@@ -266,17 +269,18 @@ def status() -> None:
     else:
         log("Not running")
 
-def query_cli(minutes: int = 60) -> None:
-    """CLI helper: print last N minutes of trades."""
+def query_cli(minutes: int = 60, coin: str = "BTC") -> None:
+    """CLI helper: print last N minutes of trades for a coin."""
     since = time.time() - minutes * 60
-    trades = query_trades_since(since)
+    trades = query_trades_since(since, coin)
     print(json.dumps(trades, indent=2, default=str))
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: hl_trade_buffer.py {start|stop|status|query N|run}")
+        print("Usage: hl_trade_buffer.py {start|stop|status|query N [coin]|run}")
+        print("  Env: HL_TRADE_COINS=ETH,BTC,MATIC (comma-separated, default: BTC)")
         sys.exit(1)
 
     cmd = sys.argv[1].lower()
@@ -287,8 +291,9 @@ if __name__ == "__main__":
     elif cmd == "status":
         status()
     elif cmd == "query":
-        mins = int(sys.argv[2]) if len(sys.argv) > 2 else 60
-        query_cli(mins)
+        mins = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 60
+        coin = sys.argv[3] if len(sys.argv) > 3 else "BTC"
+        query_cli(mins, coin)
     elif cmd == "run":
         # Foreground mode for supervised process managers
         log("Starting in foreground (supervised mode)")
