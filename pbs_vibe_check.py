@@ -539,15 +539,15 @@ def print_header(now_utc: datetime.datetime, prices: Dict[str, float], coins: Li
     price_parts = []
     for c in coins:
         p = prices.get(c)
-        price_parts.append(f"{c} ${p:,.0f}" if p else f"{c} —")
+        price_parts.append(f"{c} ${p:,.0f}" if p else f"{c} \u2014")
     price_str = " | ".join(price_parts)
 
-    print("\u2550" * 72)
-    print(f"  PBS VIBE CHECK \u2014 {now_utc:%Y-%m-%d %H:%M:%S} UTC")
+    print("\u2500" * 60)
+    print(f"  PBS VIBE CHECK \u2014 {now_utc:%Y-%m-%d %H:%M} UTC")
     print(f"  Day: {weekday_name(now_utc.weekday())}  |  Day Ruler: {PLANET_EMOJI.get(day_ruler, '?')} {day_ruler}")
     print(f"  {price_str}")
     print(f"  Network: {'TESTNET' if USE_TESTNET else 'MAINNET'}")
-    print("\u2550" * 72)
+    print("\u2500" * 60)
 
 
 def print_active_kz_detail(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
@@ -579,37 +579,34 @@ def print_active_kz_detail(now_utc: datetime.datetime, active_kz: Optional[str])
     pct = (elapsed / duration * 100) if duration > 0 else 0
     hour_type = "Day" if is_day else "Night"
 
-    # Day/night lengths from planetary hours
     hours = get_planetary_hours_for_date(loc_key, now_utc.date())
     day_h = (hours[11]["end_utc"] - hours[0]["start_utc"]).total_seconds() / 3600
     night_h = 24 - day_h
 
     bias = planet_bias(planet)
-    print(f"\n\u2500\u2500 Active KZ \u2014 {kz_def['label']} \u2500\u2500")
-    print(f"  Planet:      {PLANET_EMOJI.get(planet, '?')} {planet}{bias}")
-    print(f"  Hour:        {hour_num} of 24  ({hour_type})")
-    print(f"  Local:       {fmt_time(start_local)} \u2013 {fmt_time(end_local)} {tz.zone}")
-    print(f"  UTC:         {fmt_time(start_utc)} \u2013 {fmt_time(end_utc)}")
-    print(f"  Progress:    {pct:.0f}%  ({minutes_fmt(int(elapsed))} in, {minutes_fmt(int(duration - elapsed))} left)")
-    print(f"  Day/Night:   {day_h:.1f}h / {night_h:.1f}h")
+    print(f"\n\u2500\u2500 Current Planetary Hour \u2014 {kz_def['label']} \u2500\u2500")
+    print(f"  Planet:        {PLANET_EMOJI.get(planet, '?')} {planet}{bias}")
+    print(f"  Hour number:   {hour_num} of 24  ({hour_type} hour)")
+    print(f"  Local time:    {fmt_time(start_local)} \u2013 {fmt_time(end_local)} {tz.zone}")
+    print(f"  UTC:           {fmt_time(start_utc)} \u2013 {fmt_time(end_utc)}")
+    print(f"  Progress:      {pct:.1f}%  ({minutes_fmt(int(elapsed))} elapsed, {minutes_fmt(int(duration - elapsed))} remaining)")
+    print(f"  Day length:    {day_h:.2f}h  |  Night length: {night_h:.2f}h")
 
-    # Hermetic correspondences
     hd = HERMETIC_DATA.get(planet)
     if hd:
-        print(f"\n  \u26a1 Hermetic Correspondences \u2014 {planet}")
+        print(f"\n  \u26a1 Hermetic Correspondences \u2014 {planet} \u26a1")
         for key in ["sephira", "angel", "metal", "color", "day", "virtue", "vice", "tarot", "alchemy"]:
             print(f"    {key.capitalize():<10} {hd[key]}")
 
 
 def print_kz_table(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
     print(f"\n{'Kill Zone':<20} {'UTC':<14} {'Planetary Hours'}")
-    print("-" * 80)
+    print("\u2500" * 70)
 
     for kz_name in KZ_DISPLAY_ORDER:
         kz_def = KILL_ZONES[kz_name]
         label = kz_def["label"]
         utc_range = f"{kz_def['start_hour']:02d}:{kz_def['start_min']:02d}\u2013{kz_def['end_hour']:02d}:{kz_def['end_min']:02d}"
-
         loc_key = KZ_TO_LOCATION[kz_name]
         start_utc, end_utc = get_kill_zone_utc_range(kz_name, now_utc.date())
         local_start = start_utc.astimezone(TZ[loc_key])
@@ -620,7 +617,7 @@ def print_kz_table(now_utc: datetime.datetime, active_kz: Optional[str]) -> None
 
         if overlapping:
             seq = " \u2192 ".join(
-                f"{PLANET_EMOJI.get(p['planet'], '?')}{p['planet'][:3]}" for p in overlapping
+                f"{PLANET_EMOJI.get(p['planet'], '?')} {p['planet']}" for p in overlapping
             )
         else:
             seq = "\u2014"
@@ -629,69 +626,62 @@ def print_kz_table(now_utc: datetime.datetime, active_kz: Optional[str]) -> None
         print(f"{prefix}{label:<18} {utc_range:<14} {seq}")
 
 
-def print_technicals(coin: str, m1_candles: List[dict], h4_candles: List[dict]) -> None:
-    print(f"\n\u2500\u2500 Technicals \u2014 {coin} \u2500\u2500")
-
-    # 1m EMAs + RSI
+def print_technicals(coin: str, m1_candles: List[dict], h4_candles: List[dict]) -> Dict[str, Optional[float]]:
+    """Print technicals for one coin. Returns dict for use by microstructure."""
     closes_1m = [_extract_close(c) for c in m1_candles]
     e9 = ema(closes_1m, 9)
     e21 = ema(closes_1m, 21)
     r14_1m = rsi(closes_1m, 14)
 
-    if e9 is not None and e21 is not None:
-        e9_a = "\u25b2" if e9 > e21 else ("\u25bc" if e9 < e21 else "\u2500")
-        e21_a = "\u25b2" if e21 > e9 else ("\u25bc" if e21 < e9 else "\u2500")
-        rsi_s = f"{r14_1m:.1f}" if r14_1m is not None else "\u2014"
-        rsi_a = "\u25b2" if r14_1m and r14_1m > 50 else ("\u25bc" if r14_1m and r14_1m < 50 else "\u2500")
-        print(f"  1m: EMA9  ${e9:,.0f} {e9_a}  EMA21 ${e21:,.0f} {e21_a}  RSI {rsi_s} {rsi_a}")
-    else:
-        print(f"  1m: EMA9 \u2014  EMA21 \u2014  RSI \u2014")
-
-    # 4h EMAs + RSI
     closes_4h = [_extract_close(c) for c in h4_candles]
     e20 = ema(closes_4h, 20)
     e50 = ema(closes_4h, 50)
     r14_4h = rsi(closes_4h, 14)
 
+    print(f"\n\u2500\u2500 Technical Indicators \u2014 {coin} \u2500\u2500")
+    if e9 is not None and e21 is not None:
+        e9_a = "\u25b2" if e9 > e21 else ("\u25bc" if e9 < e21 else "\u2500")
+        e21_a = "\u25b2" if e21 > e9 else ("\u25bc" if e21 < e9 else "\u2500")
+        rsi_s = f"RSI(14) {r14_1m:.1f}" if r14_1m is not None else ""
+        print(f"  1m: EMA9 ${e9:,.0f} {e9_a}  EMA21 ${e21:,.0f} {e21_a}  {rsi_s}")
+    else:
+        print(f"  1m: EMA9 \u2014  EMA21 \u2014")
+
     if e20 is not None and e50 is not None:
         e20_a = "\u25b2" if e20 > e50 else ("\u25bc" if e20 < e50 else "\u2500")
         e50_a = "\u25b2" if e50 > e20 else ("\u25bc" if e50 < e20 else "\u2500")
-        rsi_s = f"{r14_4h:.1f}" if r14_4h is not None else "\u2014"
-        rsi_a = "\u25b2" if r14_4h and r14_4h > 50 else ("\u25bc" if r14_4h and r14_4h < 50 else "\u2500")
-        print(f"  4h: EMA20 ${e20:,.0f} {e20_a}  EMA50 ${e50:,.0f} {e50_a}  RSI {rsi_s} {rsi_a}")
+        rsi_s = f"RSI(14) {r14_4h:.1f}" if r14_4h is not None else ""
+        print(f"  4h: EMA20 ${e20:,.0f} {e20_a}  EMA50 ${e50:,.0f} {e50_a}  {rsi_s}")
     else:
-        print(f"  4h: EMA20 \u2014  EMA50 \u2014  RSI \u2014")
+        print(f"  4h: EMA20 \u2014  EMA50 \u2014")
+
+    return {"e20": e20, "e50": e50, "r14_4h": r14_4h, "e9": e9, "e21": e21, "r14_1m": r14_1m}
 
 
 def print_microstructure(coin: str, trades: List[TradeTick],
-                         price: Optional[float], ctx: Dict[str, Optional[float]]) -> None:
-    print(f"\n\u2500\u2500 Microstructure \u2014 {coin} \u2500\u2500")
+                         price: Optional[float], ctx: Dict[str, Optional[float]],
+                         tech: Dict[str, Optional[float]]) -> None:
+    """Print microstructure data."""
+    print(f"\n\u2500\u2500 Market Microstructure \u2014 {coin} \u2500\u2500")
 
     if price:
-        print(f"  Price:   ${price:,.0f}")
-    else:
-        print(f"  Price:   \u2014")
+        print(f"  Current Price:   ${price:,.0f}")
 
     oi = ctx.get("oi")
     funding = ctx.get("funding")
-    print(f"  OI:      {oi:,.0f} {coin}" if oi else f"  OI:      \u2014")
-
+    if oi:
+        print(f"  Open Interest:   {oi:,.0f} {coin}")
     if funding is not None:
-        f_pct = funding * 100
         f_ann = funding * 24 * 365 * 100
-        print(f"  Funding: {f_pct:+.6f}%  ({f_ann:+.1f}% ann)")
-    else:
-        print(f"  Funding: \u2014")
+        print(f"  Funding Rate:    {funding*100:+.6f}%  ({f_ann:+.1f}% ann)")
 
     if trades:
-        # Cumulative delta
-        print(f"  Cum. Delta:")
+        print(f"  Cumulative Delta:")
         for w in [1, 5, 15, 60]:
             cd = cumulative_delta(trades, w)
             sign = "+" if cd >= 0 else ""
             print(f"    {w:>2}m: {sign}{cd:>+8.1f} {coin}")
 
-        # Trapped traders
         if price:
             trap = trapped_traders(trades, price)
             tl, ts = trap["trapped_longs"], trap["trapped_shorts"]
@@ -702,24 +692,19 @@ def print_microstructure(coin: str, trades: List[TradeTick],
                 pressure = "\U0001f7e2 shorts trapped \u2192 squeeze \u2191"
             else:
                 pressure = "\u26aa balanced"
-            print(f"  Trapped: L{tl} above / S{ts} below  {pressure}")
-            if avg_tl:
-                print(f"    avg trapped long entry:  ${avg_tl:,.0f}")
-            if avg_ts:
-                print(f"    avg trapped short entry: ${avg_ts:,.0f}")
+            print(f"  Net Trapped:")
+            print(f"    Longs above:  {tl}" + (f"  (avg entry: ${avg_tl:,.0f})" if avg_tl else ""))
+            print(f"    Shorts below: {ts}" + (f"  (avg entry: ${avg_ts:,.0f})" if avg_ts else ""))
+            print(f"    Pressure:     {pressure}")
 
-        # Liquidations
         liq = liquidation_stats(trades, 60)
-        total_liq = liq["total"]
-        if total_liq > 0:
-            rate = total_liq / 60
+        if liq["total"] > 0:
+            rate = liq["total"] / 60
             activity = "\U0001f525 HIGH" if rate >= 2 else ("\u26a0 ELEVATED" if rate >= 1 else "normal")
-            print(f"  Liqs (60m): {total_liq}  (${liq['notional']:,.0f})  [{activity}]")
+            print(f"  Liquidations (60m): {liq['total']}  (${liq['notional']:,.0f})  [{activity}]")
             print(f"    Longs rekt:  {liq['long_liqs']}  |  Shorts rekt: {liq['short_liqs']}")
         else:
-            print(f"  Liqs (60m): none")
-    else:
-        print(f"  No recent trades available")
+            print(f"  Liquidations (60m): none")
 
 
 def print_lunar(now_utc: datetime.datetime) -> None:
@@ -727,18 +712,15 @@ def print_lunar(now_utc: datetime.datetime) -> None:
     name = moon_phase_name(frac)
     emoji, display = PHASE_DISPLAY.get(name, ("\U0001f319", name))
 
-    # Determine arc
     if 0.25 <= frac < 0.75:
-        arc = "BULLISH ARC (FQ \u2192 TQ, bottom at Full Moon)"
+        arc = "Bullish arc (FQ \u2192 TQ, bottom at Full Moon)"
     else:
-        arc = "BEARISH ARC (TQ \u2192 FQ, top at New Moon)"
+        arc = "Bearish arc (TQ \u2192 FQ, top at New Moon)"
 
-    # Days to full/new moon
     now_jd = _datetime_to_jd(now_utc)
     months_elapsed = math.floor((now_jd - REF_NEW_MOON_JD) / SYNODIC_MONTH)
     fm_jd = REF_NEW_MOON_JD + (months_elapsed + 0.5) * SYNODIC_MONTH
     nm_jd = REF_NEW_MOON_JD + (months_elapsed + 1.0) * SYNODIC_MONTH
-    # Handle if we already passed this month's full moon
     if fm_jd < now_jd:
         fm_jd += SYNODIC_MONTH
     if nm_jd < now_jd:
@@ -746,13 +728,13 @@ def print_lunar(now_utc: datetime.datetime) -> None:
     days_to_fm = (fm_jd - now_jd)
     days_to_nm = (nm_jd - now_jd)
 
-    in_fm_window = days_to_fm <= 1.0  # within 24h of full moon
+    in_fm_window = days_to_fm <= 1.0
 
-    print(f"\n\u2500\u2500 Lunar Phase \u2500\u2500")
-    print(f"  Current:  {emoji} {display}  ({frac:.3f})")
-    print(f"  Arc:      {arc}")
-    print(f"  Full Moon:  {days_to_fm:.1f}d away" + ("  \u26a0 IN FM WINDOW \u2014 tighten stops, size -50%" if in_fm_window else ""))
-    print(f"  New Moon:   {days_to_nm:.1f}d away")
+    print(f"\n\u2500\u2500 Lunar Phases \u2500\u2500")
+    print(f"  Current:     {emoji} {display}")
+    print(f"  Arc:         {arc}")
+    print(f"  Full Moon:   {days_to_fm:.1f}d away" + ("  \u26a0 IN FM WINDOW \u2014 tighten stops, size -50%" if in_fm_window else ""))
+    print(f"  New Moon:    {days_to_nm:.1f}d away")
 
     upcoming = get_upcoming_lunar_phases(now_utc, count=7)
     print(f"  Next transitions:")
@@ -762,18 +744,18 @@ def print_lunar(now_utc: datetime.datetime) -> None:
 
 
 def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
-    print(f"\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
-
     perp_eq = portfolio.get("perp_equity", 0.0)
     spot_bal = portfolio.get("spot_balance", 0.0)
     total_eq = portfolio.get("total_equity", 0.0)
-    print(f"  Perp Equity:  ${perp_eq:,.2f}")
-    print(f"  Spot Balance: ${spot_bal:,.2f}")
-    print(f"  Total Equity: ${total_eq:,.2f}")
+
+    print(f"\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
+    print(f"  Perp Equity:    ${perp_eq:,.2f}")
+    print(f"  Spot Balance:   ${spot_bal:,.2f}")
+    print(f"  Total Equity:   ${total_eq:,.2f}")
 
     positions = portfolio.get("positions", [])
     if positions:
-        print(f"  Positions ({len(positions)}):")
+        print(f"  Position: {len(positions)} open")
         for p in positions:
             coin = p["coin"]
             side = p["side"].upper()
@@ -786,7 +768,7 @@ def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
             liq_s = f"  liq ${liq:,.0f}" if liq > 0 else ""
             print(f"    {side} {size:.4f} {coin} @ ${entry:,.0f} ({lev:.0f}x)  PnL {pnl_s}${upnl:,.2f}{liq_s}")
     else:
-        print(f"  Positions: NONE")
+        print(f"  Position: NONE")
 
 
 def print_next_kz(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
@@ -796,15 +778,12 @@ def print_next_kz(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
 
     for kz_name in KZ_DISPLAY_ORDER:
         start_utc, end_utc = get_kill_zone_utc_range(kz_name, now_utc.date())
-        # Skip currently active
         if kz_name == active_kz:
             continue
-        # If this KZ hasn't started yet today
         if start_utc > now_utc:
             if best_start is None or start_utc < best_start:
                 best_name = kz_name
                 best_start = start_utc
-        # If KZ already ended, try tomorrow
         elif end_utc <= now_utc:
             tomorrow_start = start_utc + datetime.timedelta(days=1)
             if best_start is None or tomorrow_start < best_start:
@@ -830,7 +809,7 @@ def print_next_kz(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
 
 def print_footer(now_utc: datetime.datetime) -> None:
     print(f"\n  Updated: {now_utc:%Y-%m-%d %H:%M:%S} UTC")
-    print("\u2550" * 72)
+    print("\u2500" * 60)
 
 
 # ── Main ─────────────────────────────────────────────────────────────────────
@@ -858,16 +837,16 @@ def main() -> int:
     # 5. KZ table
     print_kz_table(now_utc, active_kz)
 
-    # 6. Per-asset: technials + microstructure
+    # 6. Per-asset: technicals + microstructure (combined)
     for coin in coins:
         m1 = hl_candles(coin, "1m", 100)
         h4 = hl_candles(coin, "4h", 80)
-        print_technicals(coin, m1, h4)
+        tech = print_technicals(coin, m1, h4)
 
         trades = hl_recent_trades(coin, limit=500)
         price = prices.get(coin)
         ctx = asset_context(coin)
-        print_microstructure(coin, trades, price, ctx)
+        print_microstructure(coin, trades, price, ctx, tech)
 
     # 7. Lunar
     print_lunar(now_utc)
