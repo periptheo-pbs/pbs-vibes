@@ -395,6 +395,26 @@ def hl_portfolio() -> Dict[str, object]:
         result["spot_balance"] = 0.0
 
     result["total_equity"] = result.get("perp_equity", 0.0) + result.get("spot_balance", 0.0)
+
+    # Open orders
+    orders = _hl_post({"type": "openOrders", "user": HL_WALLET})
+    result["open_orders"] = orders if isinstance(orders, list) else []
+
+    # Recent fills (24h) with PnL summary
+    now_ms = int(_time.time() * 1000)
+    day_ago_ms = now_ms - 86_400_000
+    fills = _hl_post({"type": "userFills", "user": HL_WALLET, "startTime": day_ago_ms, "endTime": now_ms})
+    if isinstance(fills, list):
+        result["fills_24h"] = fills
+        result["realized_pnl_24h"] = sum(float(f.get("closedPnl", 0)) for f in fills)
+        result["fees_24h"] = sum(float(f.get("fee", 0)) for f in fills)
+        result["fill_count_24h"] = len(fills)
+    else:
+        result["fills_24h"] = []
+        result["realized_pnl_24h"] = 0.0
+        result["fees_24h"] = 0.0
+        result["fill_count_24h"] = 0
+
     return result
 
 
@@ -770,14 +790,14 @@ def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
     spot_bal = portfolio.get("spot_balance", 0.0)
     total_eq = portfolio.get("total_equity", 0.0)
 
-    print(f"\n\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
+    print(f"\n\u2500\u2500 Portfolio (HL {'Testnet' if USE_TESTNET else 'Mainnet'}) \u2500\u2500")
     print(f"  Perp Equity:    ${perp_eq:,.2f}")
     print(f"  Spot Balance:   ${spot_bal:,.2f}")
     print(f"  Total Equity:   ${total_eq:,.2f}")
 
     positions = portfolio.get("positions", [])
     if positions:
-        print(f"  Position: {len(positions)} open")
+        print(f"  Positions ({len(positions)}):")
         for p in positions:
             coin = p["coin"]
             side = p["side"].upper()
@@ -790,7 +810,42 @@ def print_portfolio(portfolio: Dict[str, object], coins: List[str]) -> None:
             liq_s = f"  liq ${liq:,.0f}" if liq > 0 else ""
             print(f"    {side} {size:.4f} {coin} @ ${entry:,.0f} ({lev:.0f}x)  PnL {pnl_s}${upnl:,.2f}{liq_s}")
     else:
-        print(f"  Position: NONE")
+        print(f"  Positions: NONE")
+
+    # Open orders
+    orders = portfolio.get("open_orders", [])
+    if orders:
+        print(f"  Open Orders ({len(orders)}):")
+        for o in orders:
+            coin = o.get("coin", "?")
+            side = o.get("side", "?")
+            sz = o.get("sz", "?")
+            px = o.get("limitPx", "?")
+            order_type = o.get("orderType", "?")
+            print(f"    {side} {sz} {coin} @ ${px} ({order_type})")
+    else:
+        print(f"  Open Orders: none")
+
+    # 24h trading summary
+    fill_count = portfolio.get("fill_count_24h", 0)
+    if fill_count > 0:
+        rpnl = portfolio.get("realized_pnl_24h", 0.0)
+        fees = portfolio.get("fees_24h", 0.0)
+        rpnl_s = "+" if rpnl >= 0 else ""
+        print(f"  24h Activity: {fill_count} fills  |  PnL {rpnl_s}${rpnl:,.2f}  |  Fees ${fees:,.2f}")
+
+        # Last 3 fills
+        fills = portfolio.get("fills_24h", [])
+        if fills:
+            print(f"  Recent fills:")
+            for f in fills[:3]:
+                coin = f.get("coin", "?")
+                direction = f.get("dir", "?")
+                sz = f.get("sz", "?")
+                px = f.get("px", "?")
+                pnl = float(f.get("closedPnl", 0))
+                pnl_s = "+" if pnl >= 0 else ""
+                print(f"    {coin} {direction} {sz} @ ${px}  PnL {pnl_s}${pnl:,.2f}")
 
 
 def print_next_kz(now_utc: datetime.datetime, active_kz: Optional[str]) -> None:
